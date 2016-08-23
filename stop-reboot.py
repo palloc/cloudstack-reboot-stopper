@@ -7,7 +7,7 @@ def Com_ack():
     loss_pat='0 packets received'
     management_ip = "127.0.0.1"
     counter = 0
-    with open('cloudstack_access.log', 'w') as log_file:
+    with open('/var/log/cloudstack_connection.log', 'w') as log_file:
         for i in range(3):
             # send ping
             ping = subprocess.Popen(
