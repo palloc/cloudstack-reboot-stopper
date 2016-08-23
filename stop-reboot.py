@@ -36,13 +36,6 @@ def Com_ack():
                     agnet_stderr = subprocess.PIPE
                 )
                 out, error = agentstop.communicate()
-                manage_stop = subprocess.Popen(
-                    ["service", "cloudstack-management", "stop"],
-                    manage_stdout = subprocess.PIPE,
-                    manage_stderr = subprocess.PIPE
-                )
-                out, error = agentstop.communicate()            
-                log_file.close()
                 sys.exit()
 
 
