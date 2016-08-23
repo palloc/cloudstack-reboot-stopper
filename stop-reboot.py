@@ -1,14 +1,15 @@
 import time
 import subprocess
 import datetime
+import sys
 
 def Com_ack():
     loss_pat='0 packets received'
-    management_ip = "127.0.0.1"
+    management_ip = "192.168.250.121"
     counter = 0
     for i in range(3):
         ping = subprocess.Popen(
-            ["ping","-c","1", "-i", "15", management_ip],
+            ["ping","-c","1", "-i", "5", management_ip],
             stdout = subprocess.PIPE,
             stderr = subprocess.PIPE
         )
@@ -17,16 +18,14 @@ def Com_ack():
         
         for line in out.splitlines():
             if loss_pat in line:
-                message = line.split(msg_pat)[1]
                 flag = False
             else:
                 flag = True
-            if flag:
-                print '[ OK ] ' + 'Successed to connect ' + management_ip + ' at ' + datetime.datetime.now().strftime('%x %X')
-            else:
-                print '[ NO ]' + 'Failed to connect 'datetime.datetime.now().strftime('%x %X')
-                counter += 1
-                break
+        if flag:
+            print '[ OK ] ' + 'Successed to connect ' + management_ip + ' at ' + datetime.datetime.now().strftime('%x %X')
+        else:
+            print '[ NO ]' + 'Failed to connect ' + datetime.datetime.now().strftime('%x %X')
+            counter += 1
         if counter == 3:
             agentstop = subprocess.Popen(
                 ["service", "cloudstack-agent", "stop"],
@@ -40,11 +39,10 @@ def Com_ack():
                 managestderr = subprocess.PIPE
             )
             out, error = agentstop.communicate()            
-
+            sys.exit()
 
 
 if __name__ == '__main__':
-
     while True:
         Com_ack()
         time.sleep(75)
