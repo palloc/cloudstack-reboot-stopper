@@ -7,14 +7,16 @@ def Com_ack():
     loss_pat='0 packets received'
     management_ip = "127.0.0.1"
     counter = 0
+    
+    log_file = open('cloudstack_access.log','w')
     for i in range(3):
+        # send ping
         ping = subprocess.Popen(
-            ["ping","-c","1", "-i", "5", management_ip],
+            ["ping","-c","1", "-i", "15", management_ip],
             stdout = subprocess.PIPE,
             stderr = subprocess.PIPE
         )
         out, error = ping.communicate()
-        message = ''
         
         for line in out.splitlines():
             if loss_pat in line:
@@ -22,21 +24,23 @@ def Com_ack():
             else:
                 flag = True
         if flag:
-            print '[ OK ] ' + 'Successed to connect ' + management_ip + ' at ' + datetime.datetime.now().strftime('%x %X')
+            log_file.write('[ OK ] ' + 'Successed to connect ' + management_ip + ' at ' + datetime.datetime.now().strftime('%x %X') + '\n')
         else:
-            print '[ NO ]' + 'Failed to connect ' + datetime.datetime.now().strftime('%x %X')
+            log_file.write('[ NO ]' + 'Failed to connect ' + datetime.datetime.now().strftime('%x %X') + '\n')
             counter += 1
+        
+        # failed connect
         if counter == 3:
-            agentstop = subprocess.Popen(
+            agent_stop = subprocess.Popen(
                 ["service", "cloudstack-agent", "stop"],
-                agentstdout = subprocess.PIPE,
-                agnetstderr = subprocess.PIPE
+                agent_stdout = subprocess.PIPE,
+                agnet_stderr = subprocess.PIPE
             )
             out, error = agentstop.communicate()
-            managementstop = subprocess.Popen(
+            manage_stop = subprocess.Popen(
                 ["service", "cloudstack-management", "stop"],
-                managestdout = subprocess.PIPE,
-                managestderr = subprocess.PIPE
+                manage_stdout = subprocess.PIPE,
+                manage_stderr = subprocess.PIPE
             )
             out, error = agentstop.communicate()            
             sys.exit()
