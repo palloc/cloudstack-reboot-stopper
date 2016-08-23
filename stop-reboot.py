@@ -5,7 +5,7 @@ import sys
 
 def Com_ack():
     loss_pat='0 packets received'
-    management_ip = "192.168.250.121"
+    management_ip = "127.0.0.1"
     counter = 0
     for i in range(3):
         ping = subprocess.Popen(
