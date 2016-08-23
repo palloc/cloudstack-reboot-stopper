@@ -22,9 +22,9 @@ def Com_ack():
             else:
                 flag = True
             if flag:
-                print '[ OK ] ' + 'Connection success to ' + management_ip + ' at ' + datetime.datetime.now().strftime('%x %X')
+                print '[ OK ] ' + 'Successed to connect ' + management_ip + ' at ' + datetime.datetime.now().strftime('%x %X')
             else:
-                print '[ NO ]' + datetime.datetime.now().strftime('%x %X')
+                print '[ NO ]' + 'Failed to connect 'datetime.datetime.now().strftime('%x %X')
                 counter += 1
                 break
         if counter == 3:
