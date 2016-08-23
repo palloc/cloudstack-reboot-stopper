@@ -6,5 +6,7 @@ This program is monitoring primary storage connection and stop rebooting.
 
 ## Usage
 $ git clone https://github.com/palloc/cloudstack-safe-rebooter
+
 $ cd cloudstack-safe-rebooter
+
 $ sudo python cloudstack-safe-rebooter primary_storage_ip_address &
