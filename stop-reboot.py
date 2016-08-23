@@ -1,13 +1,13 @@
-import time
-import subprocess
-import datetime
 import sys
+import time
+import datetime
+import subprocess
 
 def Com_ack():
     loss_pat='0 packets received'
     management_ip = "127.0.0.1"
     counter = 0
-    with open('/var/log/cloudstack_connection.log', 'w') as log_file:
+    with open('/var/log/cloudstack_connection.log', 'a+') as log_file:
         for i in range(3):
             # send ping
             ping = subprocess.Popen(
