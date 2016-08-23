@@ -3,9 +3,10 @@ import time
 import datetime
 import subprocess
 
-def Com_ack():
+def Com_ack(ip_address):
     loss_pat='0 packets received'
-    management_ip = "127.0.0.1"
+    management_ip = ip_address
+    print management_ip
     counter = 0
     with open('/var/log/cloudstack_connection.log', 'a+') as log_file:
         for i in range(3):
@@ -40,7 +41,9 @@ def Com_ack():
 
 
 if __name__ == '__main__':
+    ip_address = sys.argv[1]
+    print ip_address
     while True:
-        Com_ack()
+        Com_ack(ip_address)
         time.sleep(75)
         
